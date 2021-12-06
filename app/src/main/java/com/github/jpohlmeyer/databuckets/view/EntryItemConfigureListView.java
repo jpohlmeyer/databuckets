@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.github.jpohlmeyer.databuckets.R;
+import com.github.jpohlmeyer.databuckets.model.BucketEntry;
+import com.github.jpohlmeyer.databuckets.model.EntryItem;
+import com.github.jpohlmeyer.databuckets.model.ItemType;
 
 import java.util.ArrayList;
 
@@ -69,15 +73,18 @@ public class EntryItemConfigureListView extends LinearLayout {
         this.addView(entryItem, this.getChildCount() - 1);
     }
 
-    public ArrayList<EntryItemConfigureView> getEntryItems() {
-        return entryItems;
+    public BucketEntry getBucketEntry() {
+        EntryItem[] entryItemArray = new EntryItem[entryItems.size()];
+        for (int i = 0; i < entryItemArray.length; i++) {
+            String description = entryItems.get(i).getDescription().getText().toString();
+            ItemType itemType = ItemType.toItemType(((TextView) entryItems.get(i).getItemType().getSelectedView()).getText().toString());
+            EntryItem entryItem = new EntryItem(itemType, description, null);
+            entryItemArray[i] = entryItem;
+        }
+        return new BucketEntry(entryItemArray);
     }
 
-    public void setEntryItems(ArrayList<EntryItemConfigureView> entryItems) {
-        this.entryItems = entryItems;
-    }
-
-    public EditText getName() {
-        return name;
+    public String getName() {
+        return name.getText().toString();
     }
 }

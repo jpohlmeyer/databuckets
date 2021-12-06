@@ -32,16 +32,8 @@ public class AddBucketActivity extends AppCompatActivity {
     }
 
     private void addBucket() {
-        ArrayList<EntryItemConfigureView> entryItemConfigureView = binding.entryItemList.getEntryItems();
-        EntryItem[] entryItemArray = new EntryItem[entryItemConfigureView.size()];
-        for (int i = 0; i < entryItemArray.length; i++) {
-            String description = entryItemConfigureView.get(i).getDescription().getText().toString();
-            ItemType itemType = ItemType.toItemType(((TextView) entryItemConfigureView.get(i).getItemType().getSelectedView()).getText().toString());
-            EntryItem entryItem = new EntryItem(itemType, description, null);
-            entryItemArray[i] = entryItem;
-        }
-        BucketEntry template = new BucketEntry(entryItemArray);
-        DataBucket dataBucket = new DataBucket(binding.entryItemList.getName().getText().toString(), template, new ArrayList<>());
+        BucketEntry template = binding.entryItemList.getBucketEntry();
+        DataBucket dataBucket = new DataBucket(binding.entryItemList.getName(), template, new ArrayList<>());
         dataBucketsApplication.getDataBuckets().getBucketList().add(dataBucket);
         finish();
     }
