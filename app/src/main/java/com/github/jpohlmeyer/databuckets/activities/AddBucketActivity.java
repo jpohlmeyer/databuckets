@@ -3,15 +3,11 @@ package com.github.jpohlmeyer.databuckets.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
-import com.github.jpohlmeyer.databuckets.model.EntryItem;
-import com.github.jpohlmeyer.databuckets.model.ItemType;
-import com.github.jpohlmeyer.databuckets.view.EntryItemConfigureView;
 
 import java.util.ArrayList;
 

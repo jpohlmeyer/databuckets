@@ -11,8 +11,6 @@ import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
-import com.github.jpohlmeyer.databuckets.model.DataBuckets;
-import com.github.jpohlmeyer.databuckets.model.EntryItem;
 
 public class BucketActivity extends AppCompatActivity {
 

@@ -9,7 +9,6 @@ import com.github.jpohlmeyer.databuckets.model.EntryItem;
 import com.github.jpohlmeyer.databuckets.model.ItemType;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DataBucketsApplication extends Application {

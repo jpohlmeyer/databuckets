@@ -2,9 +2,7 @@ package com.github.jpohlmeyer.databuckets.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class BucketEntry {

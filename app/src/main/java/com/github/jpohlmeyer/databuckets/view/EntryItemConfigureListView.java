@@ -1,6 +1,5 @@
 package com.github.jpohlmeyer.databuckets.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
