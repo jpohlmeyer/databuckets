@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="databuckets_list_button_margin">40dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="margin_60dp">60dp</dimen>
 </resources>

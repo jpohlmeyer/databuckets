@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/add_bucket_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -19,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -28,7 +29,11 @@
                 android:textAlignment="center"
                 android:textSize="28sp" />
 
-            <!-- TODO how to configure? -->
+            <com.github.jpohlmeyer.databuckets.view.EntryItemConfigureListView
+                android:id="@+id/entry_item_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <Button
                 android:id="@+id/add_new_bucket_button"

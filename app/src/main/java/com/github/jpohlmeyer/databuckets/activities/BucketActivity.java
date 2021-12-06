@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
@@ -34,6 +35,9 @@ public class BucketActivity extends AppCompatActivity {
         binding.title.setText(dataBucket.getName());
 
         binding.addNewEntryFab.setOnClickListener(view -> navToAddBucketEntryActivity());
+        binding.showEntriesButton.setOnClickListener(view -> onClickShowEntries());
+        binding.dataAnalysisButton.setOnClickListener(view -> onClickDataAnalysis());
+        binding.exportCsvButton.setOnClickListener(view -> onClickExportCSV());
     }
 
     @Override
@@ -49,5 +53,17 @@ public class BucketActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddBucketEntryActivity.class);
         intent.putExtra("index", index);
         startActivity(intent);
+    }
+
+    private void onClickShowEntries() {
+        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onClickDataAnalysis() {
+        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onClickExportCSV() {
+        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
     }
 }

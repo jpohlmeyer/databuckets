@@ -3,6 +3,12 @@
     <string name="choose_a_bucket">Choose a Bucket!</string>
     <string name="add_new_bucket">Add new Bucket</string>
     <string name="add_new_entry_to_bucket">Add new Entry to Bucket</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="description">Description</string>
+    <string name="last_item_remove">The last item cannot be removed</string>
+    <string name="name">Name</string>
+
+    <string-array name="item_types">
+        <item>Text</item>
+        <item>Number</item>
+    </string-array>
 </resources>

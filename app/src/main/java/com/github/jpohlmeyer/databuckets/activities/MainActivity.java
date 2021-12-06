@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
             button.setText(bucket.getName());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMarginStart(this.getResources().getDimensionPixelSize(R.dimen.databuckets_list_button_margin));
-            params.setMarginEnd(this.getResources().getDimensionPixelSize(R.dimen.databuckets_list_button_margin));
+            params.setMarginStart(this.getResources().getDimensionPixelSize(R.dimen.margin_40dp));
+            params.setMarginEnd(this.getResources().getDimensionPixelSize(R.dimen.margin_40dp));
             button.setLayoutParams(params);
             bucketButtons.add(button);
             final int finalI = i;
