@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataBuckets">
         <activity
+            android:name=".activities.ShowBucketEntries"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddBucketEntryActivity"
             android:exported="false" />
         <activity

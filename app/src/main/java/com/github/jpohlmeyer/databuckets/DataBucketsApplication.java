@@ -87,11 +87,11 @@ public class DataBucketsApplication extends Application {
             entryItem.setItemValue("100");
         }
         List<BucketEntry> gasList = new ArrayList<>();
-        stromList.add(gasEntry1);
-        stromList.add(gasEntry2);
-        stromList.add(gasEntry3);
+        gasList.add(gasEntry1);
+        gasList.add(gasEntry2);
+        gasList.add(gasEntry3);
         DataBucket gas =
-                new DataBucket("Gas 654321", stromTemplate, stromList);
+                new DataBucket("Gas 654321", gasTemplate, gasList);
         this.dataBuckets.getBucketList().add(gas);
     }
 

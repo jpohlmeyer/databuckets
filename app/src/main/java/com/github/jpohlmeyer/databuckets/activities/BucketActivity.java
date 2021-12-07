@@ -54,7 +54,9 @@ public class BucketActivity extends AppCompatActivity {
     }
 
     private void onClickShowEntries() {
-        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ShowBucketEntries.class);
+        intent.putExtra("index", index);
+        startActivity(intent);
     }
 
     private void onClickDataAnalysis() {
