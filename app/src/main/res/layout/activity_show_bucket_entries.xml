@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ShowBucketEntries">
+    tools:context=".activities.ShowBucketEntriesActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,10 +34,11 @@
                     android:textSize="28sp" />
 
                 <TableLayout
+                    android:id="@+id/entry_table"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TableRow
+                    <!--<TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -3145,7 +3146,7 @@
                             android:layout_height="wrap_content"
                             android:layout_column="1"
                             android:background="@drawable/customshape2"/>
-                    </TableRow>
+                    </TableRow>-->
 
                 </TableLayout>
 

@@ -54,7 +54,7 @@ public class BucketActivity extends AppCompatActivity {
     }
 
     private void onClickShowEntries() {
-        Intent intent = new Intent(this, ShowBucketEntries.class);
+        Intent intent = new Intent(this, ShowBucketEntriesActivity.class);
         intent.putExtra("index", index);
         startActivity(intent);
     }
