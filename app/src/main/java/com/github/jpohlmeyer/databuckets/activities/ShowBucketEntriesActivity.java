@@ -17,10 +17,9 @@ import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
 import com.github.jpohlmeyer.databuckets.model.EntryItem;
 
-public class ShowBucketEntriesActivity extends AppCompatActivity {
+public class ShowBucketEntriesActivity extends DataBucketsBaseActivity {
 
     private ActivityShowBucketEntriesBinding binding;
-    private DataBucketsApplication dataBucketsApplication;
 
     private int index;
     private DataBucket dataBucket;
@@ -31,9 +30,8 @@ public class ShowBucketEntriesActivity extends AppCompatActivity {
         binding = ActivityShowBucketEntriesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        dataBucketsApplication = (DataBucketsApplication) getApplication();
         index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = dataBucketsApplication.getDataBuckets().getBucketList().get(index);
+        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
 
         binding.title.setText(dataBucket.getName());
         initTable();

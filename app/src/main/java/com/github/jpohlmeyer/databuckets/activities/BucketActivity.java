@@ -12,10 +12,9 @@ import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
 
-public class BucketActivity extends AppCompatActivity {
+public class BucketActivity extends DataBucketsBaseActivity {
 
     private ActivityBucketBinding binding;
-    private DataBucketsApplication dataBucketsApplication;
 
     private DataBucket dataBucket;
     private int index;
@@ -26,9 +25,8 @@ public class BucketActivity extends AppCompatActivity {
         binding = ActivityBucketBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        dataBucketsApplication = (DataBucketsApplication) getApplication();
         index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = dataBucketsApplication.getDataBuckets().getBucketList().get(index);
+        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
 
         binding.title.setText(dataBucket.getName());
 
@@ -43,7 +41,7 @@ public class BucketActivity extends AppCompatActivity {
         super.onStart();
 
         for (BucketEntry entry: dataBucket.getEntries()) {
-            Log.i(dataBucketsApplication.getLogTag(), entry.toString());
+            Log.i(this.getDataBucketsApplication().getLogTag(), entry.toString());
         }
     }
 

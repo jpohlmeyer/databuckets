@@ -15,11 +15,10 @@ import com.github.jpohlmeyer.databuckets.model.DataBucket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DataBucketsBaseActivity {
 
     private ActivityMainBinding binding;
 
-    private DataBucketsApplication dataBucketsApplication;
     private List<Button> bucketButtons;
 
     @Override
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.addNewBucketFab.setOnClickListener(view -> navToAddBucketActivity());
 
-        dataBucketsApplication = (DataBucketsApplication) getApplication();
         bucketButtons = new ArrayList<>();
     }
 
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bucketButtons.clear();
         int i = 0;
-        for (DataBucket bucket: dataBucketsApplication.getDataBuckets().getBucketList()) {
+        for (DataBucket bucket: this.getDataBucketsApplication().getDataBuckets().getBucketList()) {
             Button button = new Button(this);
             button.setText(bucket.getName());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

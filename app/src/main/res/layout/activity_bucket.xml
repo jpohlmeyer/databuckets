@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
-                android:text="Title"
+                android:text="@string/title"
                 android:textAlignment="center"
                 android:textSize="28sp" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="Show Entries" />
+                android:text="@string/show_entries" />
 
             <Button
                 android:id="@+id/data_analysis_button"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="Data Analysis" />
+                android:text="@string/data_analysis" />
 
             <Button
                 android:id="@+id/export_csv_button"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="Export CSV" />
+                android:text="@string/export_csv" />
 
         </LinearLayout>
 

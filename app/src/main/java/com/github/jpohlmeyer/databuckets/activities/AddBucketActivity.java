@@ -11,10 +11,9 @@ import com.github.jpohlmeyer.databuckets.model.DataBucket;
 
 import java.util.ArrayList;
 
-public class AddBucketActivity extends AppCompatActivity {
+public class AddBucketActivity extends DataBucketsBaseActivity {
 
     private ActivityAddBucketBinding binding;
-    private DataBucketsApplication dataBucketsApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +21,14 @@ public class AddBucketActivity extends AppCompatActivity {
         binding = ActivityAddBucketBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        dataBucketsApplication = (DataBucketsApplication) getApplication();
-
         binding.addNewBucketButton.setOnClickListener(view -> addBucket());
     }
 
     private void addBucket() {
         BucketEntry template = binding.entryItemList.getBucketEntry();
         DataBucket dataBucket = new DataBucket(binding.entryItemList.getName(), template, new ArrayList<>());
-        dataBucketsApplication.getDataBuckets().getBucketList().add(dataBucket);
+        this.getDataBucketsApplication().getDataBuckets().getBucketList().add(dataBucket);
+        this.getDataBucketsApplication().saveToFile();
         finish();
     }
 }

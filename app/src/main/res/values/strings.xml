@@ -6,6 +6,10 @@
     <string name="description">Description</string>
     <string name="last_item_remove">The last item cannot be removed</string>
     <string name="name">Name</string>
+    <string name="show_entries">Show Entries</string>
+    <string name="data_analysis">Data Analysis</string>
+    <string name="title">Title</string>
+    <string name="export_csv">Export CSV</string>
 
     <string-array name="item_types">
         <item>Text</item>

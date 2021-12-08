@@ -19,10 +19,9 @@ import com.github.jpohlmeyer.databuckets.model.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBucketEntryActivity extends AppCompatActivity {
+public class AddBucketEntryActivity extends DataBucketsBaseActivity {
 
     private ActivityAddBucketEntryBinding binding;
-    private DataBucketsApplication dataBucketsApplication;
 
     private DataBucket dataBucket;
 
@@ -34,9 +33,8 @@ public class AddBucketEntryActivity extends AppCompatActivity {
         binding = ActivityAddBucketEntryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        dataBucketsApplication = (DataBucketsApplication) getApplication();
         int index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = dataBucketsApplication.getDataBuckets().getBucketList().get(index);
+        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
 
         entryItemsEditTexts = new ArrayList<>();
 
@@ -76,6 +74,7 @@ public class AddBucketEntryActivity extends AppCompatActivity {
             }
         }
         dataBucket.addEntry(newEntry);
+        this.getDataBucketsApplication().saveToFile();
         finish();
     }
 }

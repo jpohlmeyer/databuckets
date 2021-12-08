@@ -3,6 +3,7 @@ package com.github.jpohlmeyer.databuckets.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DataBuckets {
 
     private List<DataBucket> bucketList;
@@ -18,4 +19,5 @@ public class DataBuckets {
     public void setBucketList(List<DataBucket> bucketList) {
         this.bucketList = bucketList;
     }
+
 }
