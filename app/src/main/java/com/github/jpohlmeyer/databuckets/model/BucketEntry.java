@@ -54,4 +54,8 @@ public class BucketEntry {
         }
         return sb.toString();
     }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
 }

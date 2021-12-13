@@ -9,9 +9,10 @@
     <string name="show_entries">Show Entries</string>
     <string name="data_analysis">Data Analysis</string>
     <string name="title">Title</string>
-    <string name="export_csv">Export CSV</string>
+    <string name="save_to_dropbox">Save to Dropbox</string>
     <string name="configure_a_new_bucket">Configure a new bucket</string>
     <string name="add">Add</string>
+    <string name="timestamp">Timestamp</string>
 
     <string-array name="item_types">
         <item>Text</item>

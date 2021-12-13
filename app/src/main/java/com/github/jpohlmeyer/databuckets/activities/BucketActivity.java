@@ -33,7 +33,7 @@ public class BucketActivity extends DataBucketsBaseActivity {
         binding.addNewEntryFab.setOnClickListener(view -> navToAddBucketEntryActivity());
         binding.showEntriesButton.setOnClickListener(view -> onClickShowEntries());
         binding.dataAnalysisButton.setOnClickListener(view -> onClickDataAnalysis());
-        binding.exportCsvButton.setOnClickListener(view -> onClickExportCSV());
+        binding.saveToDropboxButton.setOnClickListener(view -> onClickExportCSV());
     }
 
     @Override

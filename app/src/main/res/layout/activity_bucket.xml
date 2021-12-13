@@ -48,12 +48,12 @@
                 android:text="@string/data_analysis" />
 
             <Button
-                android:id="@+id/export_csv_button"
+                android:id="@+id/save_to_dropbox_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/export_csv" />
+                android:text="@string/save_to_dropbox" />
 
         </LinearLayout>
 
