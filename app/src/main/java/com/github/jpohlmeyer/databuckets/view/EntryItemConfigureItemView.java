@@ -15,19 +15,17 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.github.jpohlmeyer.databuckets.R;
 
-public class EntryItemConfigureView extends ConstraintLayout {
+public class EntryItemConfigureItemView extends ConstraintLayout {
 
     private EditText description;
     private Spinner itemType;
     private ImageButton deleteButton;
 
-    public EntryItemConfigureView(@NonNull Context context, OnClickListener deleteListener) {
+    public EntryItemConfigureItemView(@NonNull Context context, OnClickListener deleteListener) {
         super(context);
         LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMarginStart(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
-        params.setMarginEnd(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
-        params.setMargins(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), 0,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.setMargins(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), this.getResources().getDimensionPixelSize(R.dimen.margin_10dp),
                 this.getResources().getDimensionPixelSize(R.dimen.margin_60dp),
                 this.getResources().getDimensionPixelSize(R.dimen.margin_10dp));
         this.setLayoutParams(params);
@@ -36,7 +34,7 @@ public class EntryItemConfigureView extends ConstraintLayout {
     }
 
     private void initView(Context context, OnClickListener deleteListener) {
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
 
         description = new EditText(context);
         description.setId(View.generateViewId());
@@ -53,7 +51,7 @@ public class EntryItemConfigureView extends ConstraintLayout {
 
         deleteButton = new ImageButton(context);
         deleteButton.setId(View.generateViewId());
-        deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
+        deleteButton.setImageResource(R.drawable.ic_baseline_delete_outline_40_white);
         deleteButton.setLayoutParams(params);
         deleteButton.setOnClickListener(deleteListener);
         this.addView(deleteButton);

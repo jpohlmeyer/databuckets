@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,8 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
-                android:text="Configure a new bucket"
+                android:text="@string/configure_a_new_bucket"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="28sp" />
 
             <com.github.jpohlmeyer.databuckets.view.EntryItemConfigureListView
@@ -42,7 +44,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="Add" />
+                android:text="@string/add" />
 
         </LinearLayout>
 

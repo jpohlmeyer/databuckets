@@ -24,7 +24,7 @@ public class EntryItemConfigureListView extends LinearLayout {
 
     private ImageButton addItemButton;
 
-    private ArrayList<EntryItemConfigureView> entryItems;
+    private ArrayList<EntryItemConfigureItemView> entryItems;
 
     public EntryItemConfigureListView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -37,19 +37,17 @@ public class EntryItemConfigureListView extends LinearLayout {
         name.setHint(R.string.name);
         LinearLayout.LayoutParams nameParams =
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        nameParams.setMarginStart(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
-        nameParams.setMarginEnd(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
+        nameParams.setMargins(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), this.getResources().getDimensionPixelSize(R.dimen.margin_10dp), this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), this.getResources().getDimensionPixelSize(R.dimen.margin_10dp));
         name.setLayoutParams(nameParams);
         this.addView(name);
 
         entryItems = new ArrayList<>();
 
         addItemButton = new ImageButton(context);
-        addItemButton.setImageResource(android.R.drawable.ic_menu_add);
+        addItemButton.setImageResource(R.drawable.ic_baseline_add_48_white);
         LinearLayout.LayoutParams addItemParams =
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        addItemParams.setMarginStart(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
-        addItemParams.setMarginEnd(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp));
+        addItemParams.setMargins(this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), this.getResources().getDimensionPixelSize(R.dimen.margin_10dp), this.getResources().getDimensionPixelSize(R.dimen.margin_60dp), this.getResources().getDimensionPixelSize(R.dimen.margin_10dp));
         addItemButton.setLayoutParams(addItemParams);
         this.addView(addItemButton);
         addItemButton.setOnClickListener(view -> addItem());
@@ -59,15 +57,15 @@ public class EntryItemConfigureListView extends LinearLayout {
 
     private void deleteItem(View view) {
         if (this.getChildCount() > 3) {
-            this.removeView((EntryItemConfigureView) view.getParent());
-            this.entryItems.remove((EntryItemConfigureView) view.getParent());
+            this.removeView((EntryItemConfigureItemView) view.getParent());
+            this.entryItems.remove((EntryItemConfigureItemView) view.getParent());
         } else {
             Toast.makeText(this.getContext(), getResources().getString(R.string.last_item_remove), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void addItem() {
-        EntryItemConfigureView entryItem = new EntryItemConfigureView(this.getContext(), this::deleteItem);
+        EntryItemConfigureItemView entryItem = new EntryItemConfigureItemView(this.getContext(), this::deleteItem);
         entryItems.add(entryItem);
         this.addView(entryItem, this.getChildCount() - 1);
     }

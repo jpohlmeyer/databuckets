@@ -2,9 +2,11 @@ package com.github.jpohlmeyer.databuckets.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.ViewGroup;
 import android.widget.TableRow;
@@ -44,7 +46,7 @@ public class ShowBucketEntriesActivity extends DataBucketsBaseActivity {
             SpannableString name = new SpannableString(entryItem.getItemDescription());
             name.setSpan(new StyleSpan(Typeface.BOLD), 0, name.length(), 0);
             entryTextView.setText(name);
-            entryTextView.setPadding(this.getResources().getDimensionPixelSize(R.dimen.margin_10dp),0, this.getResources().getDimensionPixelSize(R.dimen.margin_40dp), 0);
+            entryTextView.setPadding(this.getResources().getDimensionPixelSize(R.dimen.margin_10dp),0, this.getResources().getDimensionPixelSize(R.dimen.margin_10dp), 0);
             entryTextView.setBackgroundResource(R.drawable.customshape2);
 
             TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -60,8 +62,9 @@ public class ShowBucketEntriesActivity extends DataBucketsBaseActivity {
             for (EntryItem entryItem: bucketEntry.getEntryItems()) {
                 TextView entryTextView = new TextView(this);
                 entryTextView.setText(entryItem.getItemValue());
-                entryTextView.setPadding(this.getResources().getDimensionPixelSize(R.dimen.margin_10dp),0, this.getResources().getDimensionPixelSize(R.dimen.margin_40dp), 0);
+                entryTextView.setPadding(this.getResources().getDimensionPixelSize(R.dimen.margin_10dp),0, this.getResources().getDimensionPixelSize(R.dimen.margin_10dp), 0);
                 entryTextView.setBackgroundResource(R.drawable.customshape2);
+                //entryTextView.setTextColor(R.color.design_default_color_on_secondary);
 
                 TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.column = 1;
