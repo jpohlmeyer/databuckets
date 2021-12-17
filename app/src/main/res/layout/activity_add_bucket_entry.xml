@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddBucketEntryActivity">
+    tools:context=".controller.activities.AddBucketEntryActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

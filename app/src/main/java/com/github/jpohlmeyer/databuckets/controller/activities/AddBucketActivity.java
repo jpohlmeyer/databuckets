@@ -1,13 +1,13 @@
-package com.github.jpohlmeyer.databuckets.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.os.Bundle;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
+import com.dropbox.core.oauth.DbxCredential;
+import com.github.jpohlmeyer.databuckets.controller.DropboxApi;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,9 @@ public class AddBucketActivity extends DataBucketsBaseActivity {
     private void addBucket() {
         BucketEntry template = binding.entryItemList.getBucketEntry();
         DataBucket dataBucket = new DataBucket(binding.entryItemList.getName(), template, new ArrayList<>());
-        this.getDataBucketsApplication().getDataBuckets().getBucketList().add(dataBucket);
-        this.getDataBucketsApplication().saveToFile();
+        DataBuckets dataBuckets = this.getDataBucketsApplication().getDataBuckets();
+        dataBuckets.getBucketList().add(dataBucket);
+        this.getDataBucketsApplication().getStorageManager().saveToFile(dataBuckets);
         finish();
     }
 }

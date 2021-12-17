@@ -1,11 +1,11 @@
-package com.github.jpohlmeyer.databuckets.activities;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
+import com.github.jpohlmeyer.databuckets.controller.DataBucketsApplication;
 
 public class DataBucketsBaseActivity extends AppCompatActivity {
 

@@ -1,13 +1,10 @@
-package com.github.jpohlmeyer.databuckets.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;

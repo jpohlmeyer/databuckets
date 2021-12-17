@@ -1,13 +1,14 @@
-package com.github.jpohlmeyer.databuckets.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
@@ -30,6 +31,8 @@ public class MainActivity extends DataBucketsBaseActivity {
         binding.addNewBucketFab.setOnClickListener(view -> navToAddBucketActivity());
 
         bucketButtons = new ArrayList<>();
+
+        //TODO load buckets from json?
     }
 
     @Override
@@ -54,6 +57,27 @@ public class MainActivity extends DataBucketsBaseActivity {
             binding.BucketlistView.addView(button);
             i++;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            navToSettingsActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void navToSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void navToAddBucketActivity() {

@@ -1,6 +1,4 @@
-package com.github.jpohlmeyer.databuckets.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.os.Bundle;
 import android.text.InputType;
@@ -8,7 +6,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
+import com.dropbox.core.oauth.DbxCredential;
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketEntryBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
@@ -74,7 +72,7 @@ public class AddBucketEntryActivity extends DataBucketsBaseActivity {
             }
         }
         dataBucket.addEntry(newEntry);
-        this.getDataBucketsApplication().saveToFile();
+        this.getDataBucketsApplication().getStorageManager().saveToFile(this.getDataBucketsApplication().getDataBuckets());
         finish();
     }
 }

@@ -1,19 +1,12 @@
-package com.github.jpohlmeyer.databuckets.activities;
+package com.github.jpohlmeyer.databuckets.controller.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.util.TypedValue;
-import android.view.ViewGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityShowBucketEntriesBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
