@@ -2,8 +2,6 @@ package com.github.jpohlmeyer.databuckets.controller.activities;
 
 import android.os.Bundle;
 
-import com.dropbox.core.oauth.DbxCredential;
-import com.github.jpohlmeyer.databuckets.controller.DropboxApi;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;

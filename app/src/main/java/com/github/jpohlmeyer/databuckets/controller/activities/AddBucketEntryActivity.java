@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.dropbox.core.oauth.DbxCredential;
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketEntryBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;

@@ -69,13 +69,13 @@ public class StorageManager {
         } catch (IOException e) {
             Log.e(logTag, "SAVE FAILED");
         }
-        new Thread(() -> {
-            DbxCredential localCredential = getLocalCredential();
-            if (localCredential != null) {
+        DbxCredential localCredential = getLocalCredential();
+        if (localCredential != null) {
+            new Thread(() -> {
                 DropboxApi dropboxApi = new DropboxApi(localCredential);
                 dropboxApi.saveFile(json);
-            }
-        }).start();
+            }).start();
+        }
     }
 
     public void storeCredentialLocally(DbxCredential dbxCredential) {

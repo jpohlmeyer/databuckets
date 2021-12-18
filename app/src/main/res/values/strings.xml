@@ -16,7 +16,7 @@
     <string name="settings">Settings</string>
     <string name="sign_in_to_sync_to_dropbox">Sign in to sync to Dropbox</string>
     <string name="stop_syncing">Stop Syncing</string>
-    <string name="sync_dropbox_manually">Sync Dropbox manually</string>
+    <string name="save_dropbox_manually">Save to Dropbox manually</string>
 
     <string-array name="item_types">
         <item>Text</item>
