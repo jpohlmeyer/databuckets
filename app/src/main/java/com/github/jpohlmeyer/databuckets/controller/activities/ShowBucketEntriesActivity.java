@@ -7,20 +7,30 @@ import android.text.style.StyleSpan;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityShowBucketEntriesBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 import com.github.jpohlmeyer.databuckets.model.EntryItem;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ShowBucketEntriesActivity extends DataBucketsBaseActivity {
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class ShowBucketEntriesActivity extends AppCompatActivity {
+
+    @Inject
+    DataBuckets dataBuckets;
 
     private ActivityShowBucketEntriesBinding binding;
-
     private int index;
     private DataBucket dataBucket;
 
@@ -31,7 +41,7 @@ public class ShowBucketEntriesActivity extends DataBucketsBaseActivity {
         setContentView(binding.getRoot());
 
         index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
+        dataBucket = dataBuckets.getBucketList().get(index);
 
         binding.title.setText(dataBucket.getName());
         initTable();

@@ -9,18 +9,32 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.jpohlmeyer.databuckets.R;
+import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends DataBucketsBaseActivity {
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.multibindings.IntKey;
+
+@AndroidEntryPoint
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
     private List<Button> bucketButtons;
+
+    @Inject
+    DataBuckets dataBuckets;
+    @Inject
+    StorageManager storageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +46,7 @@ public class MainActivity extends DataBucketsBaseActivity {
 
         bucketButtons = new ArrayList<>();
 
-        //TODO load buckets from json?
+        storageManager.loadFromFile();
     }
 
     @Override
@@ -43,7 +57,7 @@ public class MainActivity extends DataBucketsBaseActivity {
         }
         bucketButtons.clear();
         int i = 0;
-        for (DataBucket bucket: this.getDataBucketsApplication().getDataBuckets().getBucketList()) {
+        for (DataBucket bucket: dataBuckets.getBucketList()) {
             Button button = new Button(this);
             button.setText(bucket.getName());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

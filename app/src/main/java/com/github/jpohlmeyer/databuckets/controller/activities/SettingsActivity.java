@@ -3,13 +3,25 @@ package com.github.jpohlmeyer.databuckets.controller.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.oauth.DbxCredential;
 import com.github.jpohlmeyer.databuckets.controller.DropboxApi;
+import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivitySettingsBinding;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 
-public class SettingsActivity extends DataBucketsBaseActivity {
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class SettingsActivity extends AppCompatActivity {
+
+    @Inject
+    StorageManager storageManager;
 
     private ActivitySettingsBinding binding;
 
@@ -20,20 +32,20 @@ public class SettingsActivity extends DataBucketsBaseActivity {
         setContentView(binding.getRoot());
 
         binding.signInDropbox.setOnClickListener(view -> DropboxApi.startDropboxAuthorization(this));
-        binding.syncDropbox.setOnClickListener(view -> this.getDataBucketsApplication().getStorageManager().saveToFile(this.getDataBucketsApplication().getDataBuckets()));
-        binding.stopDropbox.setOnClickListener(view -> this.getDataBucketsApplication().getStorageManager().removeCredentialLocally());
+        binding.syncDropbox.setOnClickListener(view -> storageManager.saveToFile());
+        binding.stopDropbox.setOnClickListener(view -> storageManager.removeCredentialLocally());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        DbxCredential localCredential = this.getDataBucketsApplication().getStorageManager().getLocalCredential();
+        DbxCredential localCredential = storageManager.getLocalCredential();
         DbxCredential credential;
         if (localCredential == null) {
             credential = Auth.getDbxCredential();
             if (credential != null) {
-                this.getDataBucketsApplication().getStorageManager().storeCredentialLocally(credential);
+                storageManager.storeCredentialLocally(credential);
             }
         } else {
             credential = localCredential;

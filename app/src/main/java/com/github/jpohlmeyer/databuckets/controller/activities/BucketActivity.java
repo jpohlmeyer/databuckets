@@ -5,14 +5,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 
-public class BucketActivity extends DataBucketsBaseActivity {
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class BucketActivity extends AppCompatActivity {
+
+    @Inject
+    DataBuckets dataBuckets;
+    @Inject
+    @Named("logTag")
+    String logTag;
 
     private ActivityBucketBinding binding;
-
     private DataBucket dataBucket;
     private int index;
 
@@ -23,7 +37,7 @@ public class BucketActivity extends DataBucketsBaseActivity {
         setContentView(binding.getRoot());
 
         index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
+        dataBucket = dataBuckets.getBucketList().get(index);
 
         binding.title.setText(dataBucket.getName());
 
@@ -38,7 +52,7 @@ public class BucketActivity extends DataBucketsBaseActivity {
         super.onStart();
 
         for (BucketEntry entry: dataBucket.getEntries()) {
-            Log.i(this.getDataBucketsApplication().getLogTag(), entry.toString());
+            Log.i(logTag, entry.toString());
         }
     }
 

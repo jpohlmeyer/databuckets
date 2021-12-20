@@ -6,22 +6,34 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.jpohlmeyer.databuckets.R;
+import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityAddBucketEntryBinding;
 import com.github.jpohlmeyer.databuckets.model.BucketEntry;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
+import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 import com.github.jpohlmeyer.databuckets.model.EntryItem;
 import com.github.jpohlmeyer.databuckets.model.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBucketEntryActivity extends DataBucketsBaseActivity {
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class AddBucketEntryActivity extends AppCompatActivity {
+
+    @Inject
+    DataBuckets dataBuckets;
+    @Inject
+    StorageManager storageManager;
 
     private ActivityAddBucketEntryBinding binding;
-
     private DataBucket dataBucket;
-
     private List<EditText> entryItemsEditTexts;
 
     @Override
@@ -30,8 +42,8 @@ public class AddBucketEntryActivity extends DataBucketsBaseActivity {
         binding = ActivityAddBucketEntryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        int index = (int) this.getIntent().getExtras().get("index");
-        dataBucket = this.getDataBucketsApplication().getDataBuckets().getBucketList().get(index);
+        int bucketIndex = (int) this.getIntent().getExtras().get("index");
+        dataBucket = dataBuckets.getBucketList().get(bucketIndex);
 
         entryItemsEditTexts = new ArrayList<>();
 
@@ -71,7 +83,7 @@ public class AddBucketEntryActivity extends DataBucketsBaseActivity {
             }
         }
         dataBucket.addEntry(newEntry);
-        this.getDataBucketsApplication().getStorageManager().saveToFile(this.getDataBucketsApplication().getDataBuckets());
+        storageManager.saveToFile();
         finish();
     }
 }

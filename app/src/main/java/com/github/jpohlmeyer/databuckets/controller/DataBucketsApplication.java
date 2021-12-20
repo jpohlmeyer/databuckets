@@ -24,42 +24,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.HiltAndroidApp;
+
+@HiltAndroidApp
 public class DataBucketsApplication extends Application {
-
-    private DataBuckets dataBuckets;
-    private StorageManager storageManager;
-
-    private final String logTag = "DataBuckets";
-
-    public DataBucketsApplication() {
-
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        this.storageManager = new StorageManager(this, logTag);
-        DataBuckets loadedBuckets = this.storageManager.loadFromFile();
-        if (loadedBuckets == null) {
-            dataBuckets = new DataBuckets();
-        } else {
-            dataBuckets = loadedBuckets;
-        }
-    }
-
-    public StorageManager getStorageManager() {
-        return storageManager;
-    }
-
-    public DataBuckets getDataBuckets() {
-        return dataBuckets;
-    }
-
-    public void setDataBuckets(DataBuckets dataBuckets) {
-        this.dataBuckets = dataBuckets;
-    }
-
-    public String getLogTag() {
-        return logTag;
-    }
 }

@@ -20,18 +20,27 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import dagger.Reusable;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
+@Reusable
 public class StorageManager {
 
     private final String storageTag = "databuckets";
     private final String filename = "savefile.json";
+    private final Gson gson;
+    private final Context context;
+    private final String logTag;
+    private final DataBuckets dataBuckets;
 
-    private String logTag;
-    private Gson gson;
-    private Context context;
-
-    public StorageManager(Context context, String logTag) {
+    @Inject
+    public StorageManager(@ApplicationContext Context context, @Named("logTag") String logTag, DataBuckets dataBuckets) {
         this.context = context;
         this.logTag = logTag;
+        this.dataBuckets = dataBuckets;
         GsonBuilder gsonBuilder = new GsonBuilder();
         LocalDateTimeJsonAdapter localDateTimeJsonAdapter = new LocalDateTimeJsonAdapter();
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, localDateTimeJsonAdapter);
@@ -39,13 +48,14 @@ public class StorageManager {
         gson = gsonBuilder.setPrettyPrinting().create();
     }
 
-    public DataBuckets loadFromFile() {
+    public void loadFromFile() {
         FileInputStream fis;
         try {
             fis = context.openFileInput(filename);
         } catch (FileNotFoundException e) {
             Log.e(logTag, "Read file failed. Init new.");
-            return null;
+            // TODO throw exception?
+            return;
         }
         InputStreamReader inputStreamReader = new InputStreamReader(fis, StandardCharsets.UTF_8);
         StringBuilder stringBuilder = new StringBuilder();
@@ -55,14 +65,15 @@ public class StorageManager {
                 stringBuilder.append(line).append('\n');
                 line = reader.readLine();
             }
-            return gson.fromJson(stringBuilder.toString(), DataBuckets.class);
+            DataBuckets newBuckets = gson.fromJson(stringBuilder.toString(), DataBuckets.class);
+            dataBuckets.setBucketList(newBuckets.getBucketList());
         } catch (IOException e) {
             Log.e(logTag, "Read file failed. Init new.");
-            return null;
+            // TODO throw exception?
         }
     }
 
-    public void saveToFile(DataBuckets dataBuckets) {
+    public void saveToFile() {
         String json = gson.toJson(dataBuckets);
         try (FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
             fos.write(json.getBytes(StandardCharsets.UTF_8));
