@@ -83,7 +83,7 @@ public class AddBucketEntryActivity extends AppCompatActivity {
             }
         }
         dataBucket.addEntry(newEntry);
-        storageManager.saveToFile();
+        storageManager.saveToFile(true);
         finish();
     }
 }

@@ -39,7 +39,7 @@ public class AddBucketActivity extends AppCompatActivity {
         BucketEntry template = binding.entryItemList.getBucketEntry();
         DataBucket dataBucket = new DataBucket(binding.entryItemList.getName(), template, new ArrayList<>());
         dataBuckets.getBucketList().add(dataBucket);
-        storageManager.saveToFile();
+        storageManager.saveToFile(true);
         finish();
     }
 }

@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.signInDropbox.setOnClickListener(view -> DropboxApi.startDropboxAuthorization(this));
-        binding.syncDropbox.setOnClickListener(view -> storageManager.saveToFile());
+        binding.syncDropbox.setOnClickListener(view -> storageManager.saveToFile(true));
         binding.stopDropbox.setOnClickListener(view -> storageManager.removeCredentialLocally());
     }
 

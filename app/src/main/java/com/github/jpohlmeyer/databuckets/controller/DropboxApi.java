@@ -26,7 +26,7 @@ public class DropboxApi {
     private static final String CLIENT_ID = "DataBuckets/1.0.0";
     private final String filename = "savefile.json";
 
-    private DbxClientV2 dropboxClient;
+    private final DbxClientV2 dropboxClient;
 
     public DropboxApi(DbxCredential dropboxCredential) {
         DbxRequestConfig requestConfig = new DbxRequestConfig(CLIENT_ID);
@@ -41,23 +41,46 @@ public class DropboxApi {
         }
     }
 
-    public FileMetadata saveFile(String content) {
+    public FileMetadata saveFile(String content, String rev) {
         try (InputStream in = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
-            return dropboxClient.files().uploadBuilder("/"+filename)
-                    .withMode(WriteMode.OVERWRITE)
-                    .uploadAndFinish(in);
+            FileMetadata fileMetadata;
+            if (rev == null) {
+                fileMetadata = dropboxClient.files().uploadBuilder("/"+filename)
+                        .withMode(WriteMode.OVERWRITE)
+                        .uploadAndFinish(in);
+            } else {
+                fileMetadata = dropboxClient.files().uploadBuilder("/"+filename)
+                        .withMode(WriteMode.update(rev))
+                        .withAutorename(true)
+                        .uploadAndFinish(in);
+            }
+            return fileMetadata;
         } catch (DbxException | IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    public FileMetadata saveFile(String content) {
+        return saveFile(content, null);
+    }
+
     public String getFile() {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             dropboxClient.files().download("/"+filename).download(byteArrayOutputStream);
+            FileMetadata fileMetadata = (FileMetadata) dropboxClient.files().getMetadata("/"+filename);
             return byteArrayOutputStream.toString(String.valueOf(StandardCharsets.UTF_8));
         } catch (DbxException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getFileRev() {
+        try {
+            return ((FileMetadata) dropboxClient.files().getMetadata("/"+filename)).getRev();
+        } catch (DbxException e) {
             e.printStackTrace();
             return null;
         }
@@ -70,5 +93,13 @@ public class DropboxApi {
         scopes.add("files.content.read");
         scopes.add("files.content.write");
         Auth.startOAuth2PKCE(context, APP_KEY, requestConfig, scopes);
+    }
+
+    public void revokeToken() {
+        try {
+            dropboxClient.auth().tokenRevoke();
+        } catch (DbxException e) {
+            e.printStackTrace();
+        }
     }
 }
