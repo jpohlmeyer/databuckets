@@ -5,13 +5,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.oauth.DbxCredential;
 import com.github.jpohlmeyer.databuckets.controller.DropboxApi;
 import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivitySettingsBinding;
-import com.github.jpohlmeyer.databuckets.model.DataBuckets;
 
 import javax.inject.Inject;
 
@@ -32,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.signInDropbox.setOnClickListener(view -> DropboxApi.startDropboxAuthorization(this));
-        binding.syncDropbox.setOnClickListener(view -> storageManager.saveToFile(true));
+        binding.syncDropbox.setOnClickListener(view -> storageManager.savePersistent());
         binding.stopDropbox.setOnClickListener(view -> storageManager.removeCredentialLocally());
     }
 

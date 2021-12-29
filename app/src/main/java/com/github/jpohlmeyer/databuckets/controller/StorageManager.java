@@ -12,6 +12,8 @@ import com.github.jpohlmeyer.databuckets.util.LocalDateTimeJsonAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,60 +51,68 @@ public class StorageManager {
         gson = gsonBuilder.setPrettyPrinting().create();
     }
 
-    public void loadFromFile(boolean loadFromDropbox) {
-        // load file from dropbox
-        // check date on dropbox?
-        // decide which one is newer
-        // overwrite older file?
-        // set databuckets
-
-//        DbxCredential localCredential = getLocalCredential();
-//        if (localCredential != null) {
-//            new Thread(() -> {
-//                DropboxApi dropboxApi = new DropboxApi(localCredential);
-//                String content = dropboxApi.getFile();
-//                String rev = dropboxApi.getFileRev();
-//                if (content != null && rev != null) {
-//                    storeDropboxRevLocally(rev);
-//                } else {
-//
-//                }
-//                FileInputStream fis;
-//                try {
-//                    fis = context.openFileInput(filename);
-//                } catch (FileNotFoundException e) {
-//                    Log.e(logTag, "Read file failed. Init new.");
-//                    // TODO throw exception?
-//                    return;
-//                }
-//                InputStreamReader inputStreamReader = new InputStreamReader(fis, StandardCharsets.UTF_8);
-//                StringBuilder stringBuilder = new StringBuilder();
-//                try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
-//                    String line = reader.readLine();
-//                    while (line != null) {
-//                        stringBuilder.append(line).append('\n');
-//                        line = reader.readLine();
-//                    }
-//                    DataBuckets newBuckets = gson.fromJson(stringBuilder.toString(), DataBuckets.class);
-//                    dataBuckets.setBucketList(newBuckets.getBucketList());
-//                } catch (IOException e) {
-//                    Log.e(logTag, "Read file failed. Init new.");
-//                    // TODO throw exception?
-//                }
-//            }).start();
-//        }
+    public void loadSavedBuckets() {
+        DbxCredential localCredential = getLocalCredential();
+        String localRev = getLocalDropboxRev();
+        if (localRev != null && localCredential != null) {
+            new Thread(() -> {
+                DropboxApi dropboxApi = new DropboxApi(localCredential);
+                String content = dropboxApi.getFile();
+                String rev = dropboxApi.getFileRev();
+                storeDropboxRevLocally(rev);
+                DataBuckets newBuckets = gson.fromJson(content, DataBuckets.class);
+                if (newBuckets != null) {
+                    dataBuckets.setBucketList(newBuckets.getBucketList());
+                } else {
+                    newBuckets = loadFromLocalStorage();
+                    if (newBuckets != null) {
+                        dataBuckets.setBucketList(newBuckets.getBucketList());
+                    }
+                }
+                EventBus.getDefault().post(new MessageEvent());
+            }).start();
+        } else {
+            DataBuckets newBuckets = loadFromLocalStorage();
+            if (newBuckets != null) {
+                dataBuckets.setBucketList(newBuckets.getBucketList());
+            }
+            EventBus.getDefault().post(new MessageEvent());
+        }
     }
 
-    public void saveToFile(boolean saveToDropbox) {
+    private DataBuckets loadFromLocalStorage() {
+        FileInputStream fis;
+        try {
+            fis = context.openFileInput(filename);
+        } catch (FileNotFoundException e) {
+            Log.e(logTag, "Read file failed. Init new.");
+            // TODO throw exception?
+            return null;
+        }
+        InputStreamReader inputStreamReader = new InputStreamReader(fis, StandardCharsets.UTF_8);
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
+            String line = reader.readLine();
+            while (line != null) {
+                stringBuilder.append(line).append('\n');
+                line = reader.readLine();
+            }
+            return gson.fromJson(stringBuilder.toString(), DataBuckets.class);
+        } catch (IOException e) {
+            Log.e(logTag, "Read file failed. Init new.");
+            // TODO throw exception?
+        }
+        return null;
+    }
+
+    public void savePersistent() {
         String json = gson.toJson(dataBuckets);
         try (FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
             fos.write(json.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             Log.e(logTag, "SAVE FAILED");
         }
-        if (saveToDropbox) {
-            saveToDropbox(json);
-        }
+        saveToDropbox(json);
     }
 
     private void saveToDropbox(String json) {
@@ -119,11 +129,14 @@ public class StorageManager {
                 }
                 if (fileMetadata == null) {
                     Log.e(logTag, "SAVE FAILED");
+                    storeDropboxRevLocally(null);
                 } else {
                     Log.i(logTag, fileMetadata.getRev());
                     storeDropboxRevLocally(fileMetadata.getRev());
                 }
             }).start();
+        } else {
+            storeDropboxRevLocally(null);
         }
     }
 

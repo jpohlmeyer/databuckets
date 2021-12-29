@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.jpohlmeyer.databuckets.R;
+import com.github.jpohlmeyer.databuckets.controller.MessageEvent;
 import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
 import com.github.jpohlmeyer.databuckets.model.DataBuckets;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +28,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.multibindings.IntKey;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -45,13 +49,26 @@ public class MainActivity extends AppCompatActivity {
         binding.addNewBucketFab.setOnClickListener(view -> navToAddBucketActivity());
 
         bucketButtons = new ArrayList<>();
+        EventBus.getDefault().register(this);
+        binding.spinningOrb.setVisibility(View.VISIBLE);
+        storageManager.loadSavedBuckets();
+    }
 
-        storageManager.loadFromFile();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        binding.spinningOrb.setVisibility(View.GONE);
+        this.refreshBuckets();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    private void refreshBuckets() {
         for (Button button: bucketButtons) {
             binding.BucketlistView.removeView(button);
         }
@@ -71,6 +88,18 @@ public class MainActivity extends AppCompatActivity {
             binding.BucketlistView.addView(button);
             i++;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        storageManager.savePersistent();
+        super.onDestroy();
     }
 
     @Override
