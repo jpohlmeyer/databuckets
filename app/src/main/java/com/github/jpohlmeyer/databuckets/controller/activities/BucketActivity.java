@@ -44,7 +44,6 @@ public class BucketActivity extends AppCompatActivity {
         binding.addNewEntryFab.setOnClickListener(view -> navToAddBucketEntryActivity());
         binding.showEntriesButton.setOnClickListener(view -> onClickShowEntries());
         binding.dataAnalysisButton.setOnClickListener(view -> onClickDataAnalysis());
-        binding.saveToDropboxButton.setOnClickListener(view -> onClickExportCSV());
     }
 
     @Override
@@ -69,10 +68,6 @@ public class BucketActivity extends AppCompatActivity {
     }
 
     private void onClickDataAnalysis() {
-        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
-    }
-
-    private void onClickExportCSV() {
         Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
     }
 }
