@@ -69,14 +69,14 @@ public class StorageManager {
                         dataBuckets.setBucketList(newBuckets.getBucketList());
                     }
                 }
-                EventBus.getDefault().post(new MessageEvent());
+                EventBus.getDefault().post(new DropboxActionDoneEvent());
             }).start();
         } else {
             DataBuckets newBuckets = loadFromLocalStorage();
             if (newBuckets != null) {
                 dataBuckets.setBucketList(newBuckets.getBucketList());
             }
-            EventBus.getDefault().post(new MessageEvent());
+            EventBus.getDefault().post(new DropboxActionDoneEvent());
         }
     }
 
@@ -85,8 +85,6 @@ public class StorageManager {
         try {
             fis = context.openFileInput(filename);
         } catch (FileNotFoundException e) {
-            Log.e(logTag, "Read file failed. Init new.");
-            // TODO throw exception?
             return null;
         }
         InputStreamReader inputStreamReader = new InputStreamReader(fis, StandardCharsets.UTF_8);
@@ -99,10 +97,8 @@ public class StorageManager {
             }
             return gson.fromJson(stringBuilder.toString(), DataBuckets.class);
         } catch (IOException e) {
-            Log.e(logTag, "Read file failed. Init new.");
-            // TODO throw exception?
+            return null;
         }
-        return null;
     }
 
     public void savePersistent() {

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.jpohlmeyer.databuckets.R;
-import com.github.jpohlmeyer.databuckets.controller.MessageEvent;
+import com.github.jpohlmeyer.databuckets.controller.DropboxActionDoneEvent;
 import com.github.jpohlmeyer.databuckets.controller.StorageManager;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
+    public void onMessageEvent(DropboxActionDoneEvent event) {
         binding.spinningOrb.setVisibility(View.GONE);
         this.refreshBuckets();
     }
