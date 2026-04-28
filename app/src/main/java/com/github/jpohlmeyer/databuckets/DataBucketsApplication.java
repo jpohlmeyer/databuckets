@@ -44,7 +44,6 @@ public class DataBucketsApplication extends Application {
         GsonBuilder gsonBuilder = new GsonBuilder();
         LocalDateTimeJsonAdapter localDateTimeJsonAdapter = new LocalDateTimeJsonAdapter();
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, localDateTimeJsonAdapter);
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, localDateTimeJsonAdapter);
         gson = gsonBuilder.setPrettyPrinting().create();
 
         loadFromFile();
@@ -155,6 +154,22 @@ public class DataBucketsApplication extends Application {
         DataBucket gas =
                 new DataBucket("Gas 654321", gasTemplate, gasList);
         this.dataBuckets.getBucketList().add(gas);
+    }
+
+    public void importFromJson(String json) {
+        try {
+            DataBuckets imported = gson.fromJson(json, DataBuckets.class);
+            if (imported != null) {
+                dataBuckets = imported;
+                saveToFile();
+            }
+        } catch (Exception e) {
+            Log.e(logTag, "Import failed: " + e.getMessage());
+        }
+    }
+
+    public String exportToJson() {
+        return gson.toJson(dataBuckets);
     }
 
     public DataBuckets getDataBuckets() {

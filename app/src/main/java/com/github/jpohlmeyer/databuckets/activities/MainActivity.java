@@ -1,25 +1,43 @@
 package com.github.jpohlmeyer.databuckets.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.R;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MainActivity extends DataBucketsBaseActivity {
 
     private ActivityMainBinding binding;
 
     private List<Button> bucketButtons;
+
+    private final ActivityResultLauncher<String[]> importLauncher = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(),
+            uri -> {
+                if (uri != null) {
+                    importDataFromUri(uri);
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,5 +83,47 @@ public class MainActivity extends DataBucketsBaseActivity {
         Intent intent = new Intent(this, BucketActivity.class);
         intent.putExtra("index", index);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_import) {
+            importLauncher.launch(new String[]{"application/json", "text/*"});
+            return true;
+        } else if (id == R.id.action_export) {
+            exportData();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void importDataFromUri(Uri uri) {
+        try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+            Scanner s = new Scanner(inputStream, StandardCharsets.UTF_8.name()).useDelimiter("\\A");
+            String result = s.hasNext() ? s.next() : "";
+            getDataBucketsApplication().importFromJson(result);
+            recreate(); // Refresh UI
+            Toast.makeText(this, "Import successful", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Import failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void exportData() {
+        String json = getDataBucketsApplication().exportToJson();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, json);
+        sendIntent.setType("application/json");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 }
