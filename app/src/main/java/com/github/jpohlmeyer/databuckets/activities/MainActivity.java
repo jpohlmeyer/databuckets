@@ -19,7 +19,10 @@ import com.github.jpohlmeyer.databuckets.databinding.ActivityMainBinding;
 import com.github.jpohlmeyer.databuckets.model.DataBucket;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,6 +38,15 @@ public class MainActivity extends DataBucketsBaseActivity {
             uri -> {
                 if (uri != null) {
                     importDataFromUri(uri);
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<String> exportLauncher = registerForActivityResult(
+            new ActivityResultContracts.CreateDocument(),
+            uri -> {
+                if (uri != null) {
+                    saveDataToUri(uri);
                 }
             }
     );
@@ -117,13 +129,18 @@ public class MainActivity extends DataBucketsBaseActivity {
     }
 
     private void exportData() {
-        String json = getDataBucketsApplication().exportToJson();
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, json);
-        sendIntent.setType("application/json");
+        exportLauncher.launch("databuckets_"+ LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)+".json");
+    }
 
-        Intent shareIntent = Intent.createChooser(sendIntent, null);
-        startActivity(shareIntent);
+    private void saveDataToUri(Uri uri) {
+        try (OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
+            if (outputStream != null) {
+                String json = getDataBucketsApplication().exportToJson();
+                outputStream.write(json.getBytes(StandardCharsets.UTF_8));
+                Toast.makeText(this, "Export successful", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Export failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -1,11 +1,17 @@
 package com.github.jpohlmeyer.databuckets.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.github.jpohlmeyer.databuckets.R;
 
 import com.github.jpohlmeyer.databuckets.DataBucketsApplication;
 import com.github.jpohlmeyer.databuckets.databinding.ActivityBucketBinding;
@@ -32,8 +38,6 @@ public class BucketActivity extends DataBucketsBaseActivity {
 
         binding.addNewEntryFab.setOnClickListener(view -> navToAddBucketEntryActivity());
         binding.showEntriesButton.setOnClickListener(view -> onClickShowEntries());
-        binding.dataAnalysisButton.setOnClickListener(view -> onClickDataAnalysis());
-        binding.saveToDropboxButton.setOnClickListener(view -> onClickExportCSV());
     }
 
     @Override
@@ -57,11 +61,34 @@ public class BucketActivity extends DataBucketsBaseActivity {
         startActivity(intent);
     }
 
-    private void onClickDataAnalysis() {
-        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bucket_menu, menu);
+        return true;
     }
 
-    private void onClickExportCSV() {
-        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_delete_bucket) {
+            confirmDeleteBucket();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDeleteBucket() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.action_delete_bucket)
+                .setMessage(R.string.delete_bucket_confirmation)
+                .setPositiveButton(R.string.delete, (dialog, which) -> deleteBucket())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void deleteBucket() {
+        this.getDataBucketsApplication().getDataBuckets().getBucketList().remove(index);
+        this.getDataBucketsApplication().saveToFile();
+        Toast.makeText(this, "Bucket deleted", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
