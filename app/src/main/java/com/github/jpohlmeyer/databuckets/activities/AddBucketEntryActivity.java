@@ -58,7 +58,7 @@ public class AddBucketEntryActivity extends DataBucketsBaseActivity {
 
     private int itemTypeToInputType(ItemType itemType) {
         if (itemType == ItemType.NUMBER) {
-            return InputType.TYPE_CLASS_NUMBER;
+            return InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
         }
         return InputType.TYPE_CLASS_TEXT;
     }
